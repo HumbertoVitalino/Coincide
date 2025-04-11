@@ -1,14 +1,14 @@
 using Core.IoC;
+using Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatr();
+builder.Services.AddInfra(configuration);
 
 var app = builder.Build();
 
