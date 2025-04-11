@@ -9,10 +9,7 @@
   <ItemGroup>
     <Folder Include="Domain\" />
     <Folder Include="Boundaries\" />
-    <Folder Include="Commons\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="Mappers\" />
-    <Folder Include="UseCase\" />
   </ItemGroup>
 
   <ItemGroup>
