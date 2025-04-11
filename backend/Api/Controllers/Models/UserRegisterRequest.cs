@@ -1,5 +1,3 @@
 ﻿namespace Api.Controllers.Models;
 
-public class UserRegisterRequest
-{
-}
+public sealed record UserRegisterRequest(string Email, string Password);

@@ -1,5 +1,4 @@
 ﻿namespace Api.Controllers.Models;
 
-public class UserLoginRequest
-{
-}
+public sealed record UserLoginRequest(string Email, string Password);
+
