@@ -1,5 +1,8 @@
-﻿namespace Core.Interfaces;
+﻿using Core.Domain;
 
-public interface IUserRepository
+namespace Core.Interfaces;
+
+public interface IUserRepository : IBaseRepository<User>
 {
+    Task<User> GetByEmailAsync(string email);
 }
