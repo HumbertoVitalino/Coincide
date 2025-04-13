@@ -1,6 +1,10 @@
-﻿namespace Core.Interfaces;
+﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
-public interface IJwtTokenProvider
+namespace Core.Interfaces;
+
+public interface IJwtTokenProvider : IOperationFilter
 {
     string GenerateToken(Guid id, string email);
+    void Apply(OpenApiOperation operation, OperationFilterContext context);
 }

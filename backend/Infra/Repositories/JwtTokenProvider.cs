@@ -1,7 +1,10 @@
 ﻿using Core.Domain;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,6 +16,31 @@ public class JwtTokenProvider(
 ) : IJwtTokenProvider
 {
     private readonly IConfiguration _configuration = configuration;
+
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        var authRequirement = context.ApiDescription.ActionDescriptor.EndpointMetadata
+            .OfType<AuthorizeAttribute>()
+            .Any();
+
+        if (authRequirement)
+        {
+            operation.Security = new List<OpenApiSecurityRequirement>
+        {
+            new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                    },
+                    new List<string>()
+                }
+            }
+        };
+        }
+    }
+
     public string GenerateToken(Guid id, string email)
     {
         var secretKey = _configuration["Jwt:Secret"];
