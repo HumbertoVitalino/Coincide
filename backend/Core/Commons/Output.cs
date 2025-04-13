@@ -5,45 +5,24 @@ namespace Core.Commons;
 
 public class Output
 {
-    private readonly List<string> _messages = [];
-
-    private List<string> _errorMessages = [];
+    private readonly List<string> _messages = new();
+    private List<string> _errorMessages = new();
 
     public IReadOnlyCollection<string>? ErrorMessages => _errorMessages?.AsReadOnly();
-
     public bool IsValid { get; private set; }
-
     public IReadOnlyCollection<string>? Messages => _messages?.AsReadOnly();
-
     public object? Result { get; private set; }
+
+    public Output() => IsValid = true;
 
     public Output(object result)
     {
         IsValid = true;
-        _messages = new List<string>();
-        _errorMessages = new List<string>();
         AddResult(result);
     }
 
-    public Output(ValidationResult validationResult)
-    {
-        _errorMessages = new List<string>();
-        _messages = new List<string>();
-        ProcessValidationResults(validationResult);
-    }
-
-    public Output(IEnumerable<ValidationResult> validationResults)
-    {
-        _errorMessages = new List<string>();
-        _messages = new List<string>();
-        ProcessValidationResults(validationResults.ToArray());
-    }
-
-    private void CreateErrorMessagesWhenThereIsNone()
-    {
-        if (_errorMessages == null)
-            _errorMessages = new List<string>();
-    }
+    public Output(ValidationResult validationResult) => ProcessValidationResults(validationResult);
+    public Output(IEnumerable<ValidationResult> validationResults) => ProcessValidationResults(validationResults.ToArray());
 
     private void ProcessValidationResults(params ValidationResult[] validationResults)
     {
@@ -55,8 +34,8 @@ public class Output
 
     private void VerifyErrorMessages(ValidationResult validationResult)
     {
-        CreateErrorMessagesWhenThereIsNone();
-        _errorMessages.AddRange(validationResult.Errors.Select((ValidationFailure e) => e.ErrorMessage).ToList());
+        _errorMessages ??= new List<string>();
+        _errorMessages.AddRange(validationResult.Errors.Select(e => e.ErrorMessage));
     }
 
     private void VerifyValidty()
@@ -66,18 +45,19 @@ public class Output
 
     public void AddErrorMessage(string message)
     {
-        AddErrorMessage(message);
+        if (string.IsNullOrEmpty(message))
+            throw new ArgumentException("message is null");
+
+        _errorMessages.Add(message);
         VerifyValidty();
     }
 
     public void AddErrorMessages(params string[] messages)
     {
-        foreach (string text in messages)
+        foreach (var text in messages)
         {
             if (string.IsNullOrEmpty(text))
-            {
                 throw new ArgumentException("message is null");
-            }
 
             _errorMessages.Add(text);
         }
@@ -87,17 +67,18 @@ public class Output
 
     public void AddMessage(string message)
     {
-        AddMessages(message);
+        if (string.IsNullOrEmpty(message))
+            throw new ArgumentException("message is null");
+
+        _messages.Add(message);
     }
 
     public void AddMessages(params string[] messages)
     {
-        foreach (string text in messages)
+        foreach (var text in messages)
         {
             if (string.IsNullOrEmpty(text))
-            {
-                throw new ArgumentNullException("message is null");
-            }
+                throw new ArgumentException("message is null");
 
             _messages.Add(text);
         }
@@ -106,18 +87,15 @@ public class Output
     public void AddResult(object result)
     {
         Result = result ?? throw new NullReferenceException();
+        IsValid = true;
     }
 
     public void AddValidationResult(ValidationResult validationResult)
     {
-        IsValid = validationResult.IsValid;
         VerifyErrorMessages(validationResult);
     }
 
-    public T? GetResult<T>()
-    {
-        return (T?)Result;
-    }
+    public T? GetResult<T>() => (T?)Result;
 
     public void SetToInvalid() => IsValid = false;
 }
