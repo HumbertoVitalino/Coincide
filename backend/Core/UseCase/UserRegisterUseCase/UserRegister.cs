@@ -1,5 +1,7 @@
 ﻿using Core.Commons;
+using Core.Domain;
 using Core.Interfaces;
+using Core.Mappers;
 using Core.UseCase.UserRegisterUseCase.Boundaries;
 using MediatR;
 
@@ -10,8 +12,30 @@ public class UserRegister(IUserRepository userRepository, IUnitOfWork unitOfWork
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public Task<Output> Handle(UserRegisterInput request, CancellationToken cancellationToken)
+    public async Task<Output> Handle(UserRegisterInput input, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
+        var output = new Output();
+
+        var existingUser = await _userRepository.GetByEmailAsync(input.Email);
+
+        if (existingUser != null)
+        {
+            output.AddErrorMessage("User already exists!");
+            return output;
+        }
+
+        if (input.Password != input.Confirmation)
+        {
+            output.AddMessage("Passwords are different!");
+            return output;
+        }
+
+        var user = input.MapToEntity();
+
+        _userRepository.Create(user);
+        await _unitOfWork.CommitAsync(cancellationToken);
+
+        output.AddResult(user);
+        return output;
+    }    
 }
