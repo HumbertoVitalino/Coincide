@@ -1,4 +1,5 @@
 ﻿using Api.Controllers.Models;
+using Api.Mapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +13,28 @@ public sealed class UserController(
 {
     private readonly IMediator _mediator = mediator;
 
-    [HttpPost]
+    [HttpPost("Register")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UserRegisterAsync([FromBody] UserRegisterRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> RegisterAsync([FromBody] UserRegisterRequest request, CancellationToken cancellationToken)
     {
-        var output = await _mediator.Send(request, cancellationToken);
+        var input = request.MapToInput();
+
+        var output = await _mediator.Send(input, cancellationToken);
+
+        return Ok(output);
+    }
+
+    [HttpPost("Login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> LoginAsync([FromBody] UserLoginRequest request, CancellationToken cancellationToken)
+    {
+        var input = request.MapToInput();
+
+        var output = await _mediator.Send(input, cancellationToken);
 
         return Ok(output);
     }

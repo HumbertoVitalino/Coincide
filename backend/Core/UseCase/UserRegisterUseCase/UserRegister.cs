@@ -35,7 +35,7 @@ public class UserRegister(IUserRepository userRepository, IUnitOfWork unitOfWork
         _userRepository.Create(user);
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        output.AddResult(user);
+        output.AddResult(input);
         return output;
     }    
 }
