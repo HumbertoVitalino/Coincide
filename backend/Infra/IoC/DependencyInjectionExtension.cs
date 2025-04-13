@@ -26,6 +26,7 @@ public static class DependencyInjectionExtension
 
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
+        serviceCollection.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
 
         return serviceCollection;
     }
