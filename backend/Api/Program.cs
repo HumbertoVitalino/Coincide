@@ -1,6 +1,6 @@
+using Core.Boundaries;
 using Core.IoC;
 using Infra.IoC;
-using Infra.Repositories;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,10 +28,10 @@ builder.Services.AddSwaggerGen(options =>
         { securityScheme, new string[] { } }
     });
 
-    options.OperationFilter<JwtTokenProvider>();
+    options.OperationFilter<JwtAuthorization>();
 });
 
-builder.Services.AddMediatr();
+builder.Services.AddMediatr(configuration);
 builder.Services.AddInfra(configuration);
 
 var app = builder.Build();
