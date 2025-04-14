@@ -1,4 +1,5 @@
-﻿using Core.Commons;
+﻿using Core.Boundaries;
+using Core.Commons;
 using Core.Interfaces;
 using Core.UseCase.UserLoginUseCase.Boundaries;
 using MediatR;
@@ -7,11 +8,11 @@ namespace Core.UseCase.UserLoginUseCase;
 
 public class UserLogin(
     IUserRepository userRepository,
-    IJwtTokenProvider jwtToken
+    JwtTokenProvider jwtToken
 ) : IRequestHandler<UserLoginInput, Output>
 {
     private readonly IUserRepository _userRepository = userRepository;
-    private readonly IJwtTokenProvider _jwtToken = jwtToken;
+    private readonly JwtTokenProvider _jwtToken = jwtToken;
 
     public async Task<Output> Handle(UserLoginInput input, CancellationToken cancellationToken)
     {
