@@ -3,13 +3,11 @@ using Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Infra.IoC;
 
 public static class DependencyInjectionExtension
 {
-
     public static IServiceCollection AddInfra(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection
@@ -26,7 +24,7 @@ public static class DependencyInjectionExtension
 
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
-        serviceCollection.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+        serviceCollection.AddScoped<IAccountRepository, AccountRepository>();
 
         return serviceCollection;
     }
