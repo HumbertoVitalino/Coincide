@@ -36,6 +36,9 @@ public sealed class UserController(
 
         var output = await _mediator.Send(input, cancellationToken);
 
-        return Ok(output);
+        if (output.IsValid)
+            return Ok(output);
+
+        return BadRequest(output);
     }
 }
