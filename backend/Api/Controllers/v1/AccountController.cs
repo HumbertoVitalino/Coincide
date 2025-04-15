@@ -1,5 +1,6 @@
 ﻿using Api.Controllers.Models;
 using Api.Mapper;
+using Core.UseCase.GetAccount.Boundaries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,17 +16,35 @@ public class AccountController(
 {
     private readonly IMediator _mediator = mediator;
 
+    [HttpGet("Account")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
+    {
+        var input = new GetAccountInput(UserId);
+
+        var output = await _mediator.Send(input, cancellationToken);
+
+        if (output.IsValid)
+            return Ok(output);
+
+        return BadRequest(output);
+    }
+
     [HttpPost("NewAccount")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> NewAccountAsync([FromBody] NewAccountRequest request, CancellationToken cancellationToken)
     {
-        var userId = UserId;
-        var input = request.MapToInput(userId);
+        var input = request.MapToInput(UserId);
 
         var output = await _mediator.Send(input, cancellationToken);
 
-        return Ok(output);
+        if (output.IsValid)
+            return Ok(output);
+
+        return BadRequest(output);
     }
 }
