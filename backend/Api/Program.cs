@@ -1,4 +1,4 @@
-using Core.Boundaries;
+using Core.Boundaries.Jwt;
 using Core.IoC;
 using Infra.IoC;
 using Microsoft.OpenApi.Models;

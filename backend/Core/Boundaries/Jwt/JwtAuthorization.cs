@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Core.Boundaries;
+namespace Core.Boundaries.Jwt;
 
 public class JwtAuthorization : IOperationFilter
 {
