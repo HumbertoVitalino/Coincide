@@ -28,4 +28,9 @@ public static class AccountMapper
             account.User.Email
         );
     }
+
+    public static IEnumerable<AccountDto> MapToDto(this IEnumerable<Account> accounts)
+    {
+        return accounts.Select(account => account.MapToDto());
+    }
 }

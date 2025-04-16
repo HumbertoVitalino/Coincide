@@ -15,15 +15,15 @@ public class GetAccountAsync(
     {
         var output = new Output();
 
-        var account = await _repository.GetAsync(input.Id);
+        var accounts = await _repository.GetAsync(input.Id);
 
-        if (account == null)
+        if (!accounts.Any())
         {
             output.AddErrorMessage("Unable to find any account for this user!");
             return output;
         }
 
-        var dto = account.MapToDto();
+        var dto = accounts.MapToDto();
 
         output.AddResult(dto);
         return output;
