@@ -9,6 +9,7 @@ public class CoincideContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<Transaction> Transactions { get; set; } 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -63,6 +64,42 @@ public class CoincideContext : DbContext
                 .WithMany(u => u.Accounts)
                 .HasForeignKey(a => a.UserId)
                 .IsRequired();
+
+            entity.HasMany(a => a.Transactions)
+                .WithOne(t => t.Account)
+                .HasForeignKey(t => t.AccountId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.HasKey(t => t.Id);
+
+            entity.Property(t => t.Value)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired();
+
+            entity.Property(t => t.Description)
+                .HasMaxLength(500);
+
+            entity.Property(t => t.Type)
+                .HasConversion<string>()
+                .IsRequired();
+
+            entity.Property(t => t.Date)
+                .IsRequired();
+
+            entity.Property(t => t.CreatedAt)
+                .IsRequired();
+
+            entity.Property(t => t.Category)
+            .HasConversion<string>();
+
+            entity.HasOne(a => a.User)
+                .WithMany(u => u.Transactions)
+                .HasForeignKey(a => a.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict); 
         });
 
         modelBuilder.Entity<Entity>(entity =>
@@ -74,5 +111,4 @@ public class CoincideContext : DbContext
                 .IsRequired();
         });
     }
-
 }
