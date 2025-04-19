@@ -31,4 +31,9 @@ public static class NewTransactionMapper
             transaction.User.Email
         );
     }
+
+    public static IEnumerable<TransactionDto> MapToDto(this IEnumerable<Transaction> transactions)
+    {
+        return transactions.Select(transaction => transaction.MapToDto());
+    }
 }
