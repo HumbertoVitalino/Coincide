@@ -1,4 +1,4 @@
-﻿using Core.Boundaries;
+﻿using Core.Boundaries.Jwt;
 using Core.Commons;
 using Core.Interfaces;
 using Core.UseCase.UserLoginUseCase.Boundaries;

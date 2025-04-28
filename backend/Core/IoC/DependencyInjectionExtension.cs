@@ -5,7 +5,7 @@ using Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Core.Boundaries;
+using Core.Boundaries.Jwt;
 
 namespace Core.IoC;
 
