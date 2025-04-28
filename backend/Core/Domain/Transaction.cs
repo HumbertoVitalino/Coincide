@@ -8,7 +8,7 @@ public class Transaction : Entity
     public TransactionsType Type { get; set; }
     public TransactionCategory Category { get; set; }
     public string? Description { get; set; }
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
     public Guid AccountId { get; set; }
     public Account Account { get; set; }
     public Guid UserId { get; set; }
@@ -21,7 +21,7 @@ public class Transaction : Entity
         string? description,
         TransactionsType type,
         TransactionCategory category,
-        DateOnly date,
+        DateTime date,
         Guid accountId,
         Guid userId)
     {

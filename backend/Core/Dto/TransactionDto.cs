@@ -7,7 +7,7 @@ public sealed record TransactionDto(
     TransactionsType Type,
     TransactionCategory Category,
     string? Description,
-    DateOnly Date,
+    DateTime Date,
     string Account,
     string Email
 );

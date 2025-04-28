@@ -9,7 +9,7 @@ public sealed record NewTransactionInput(
     TransactionsType Type,
     TransactionCategory Category,
     string? Description,
-    DateOnly Date,
+    DateTime Date,
     string AccountName,
     Guid UserId
 ) : IRequest<Output>;
