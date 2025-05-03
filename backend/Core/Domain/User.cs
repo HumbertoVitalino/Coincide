@@ -7,7 +7,9 @@ public class User : Entity
     public string Email { get; set; }
     public byte[] PasswordHash { get; set; }
     public byte[] PasswordSalt { get; set; }
-    public double Balance { get; set; } = 0.0;
+    public decimal Balance { get; set; }
+    public decimal TotalIncome { get; set; }
+    public decimal TotalExpense { get; set; }
 
 
     public User() {}
