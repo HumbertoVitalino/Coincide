@@ -17,4 +17,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Boundaries\Enums\" />
+    <Folder Include="Dto\" />
+  </ItemGroup>
+
 </Project>
