@@ -1,5 +1,4 @@
 ﻿using Core.Commons;
-using Core.Domain;
 using Core.Interfaces;
 using Core.Mappers;
 using Core.UseCase.UserRegisterUseCase.Boundaries;
@@ -26,7 +25,7 @@ public class UserRegister(IUserRepository userRepository, IUnitOfWork unitOfWork
 
         if (input.Password != input.Confirmation)
         {
-            output.AddMessage("Passwords are different!");
+            output.AddErrorMessage("Passwords are different!");
             return output;
         }
 

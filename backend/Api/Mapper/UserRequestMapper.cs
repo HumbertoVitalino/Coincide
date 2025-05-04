@@ -10,6 +10,7 @@ public static class UserRequestMapper
     {
         return new UserRegisterInput(
             request.Name,
+            request.Birthday,
             request.Email,
             request.Password,
             request.ConfirmationPassword
