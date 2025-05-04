@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Fakers\" />
-    <Folder Include="UseCaseTests\" />
   </ItemGroup>
 
 </Project>
