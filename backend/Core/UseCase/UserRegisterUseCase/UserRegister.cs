@@ -25,7 +25,7 @@ public class UserRegister(IUserRepository userRepository, IUnitOfWork unitOfWork
 
         if (input.Password != input.Confirmation)
         {
-            output.AddMessage("Passwords are different!");
+            output.AddErrorMessage("Passwords are different!");
             return output;
         }
 
