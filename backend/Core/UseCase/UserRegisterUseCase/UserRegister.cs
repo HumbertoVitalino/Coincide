@@ -1,5 +1,4 @@
 ﻿using Core.Commons;
-using Core.Domain;
 using Core.Interfaces;
 using Core.Mappers;
 using Core.UseCase.UserRegisterUseCase.Boundaries;

@@ -11,6 +11,7 @@ public static class UserRegisterMapper
 
         return new User(
             input.Name,
+            input.Birthday,
             input.Email,
             passwordHash,
             passwordSalt
