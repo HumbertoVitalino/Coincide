@@ -1,4 +1,4 @@
-﻿namespace Api.Controllers.Models;
+﻿namespace Api.Models;
 
 public sealed record UserRegisterRequest(
     string Name,
