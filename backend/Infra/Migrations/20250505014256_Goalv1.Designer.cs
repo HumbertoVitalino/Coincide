@@ -4,6 +4,7 @@ using Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(CoincideContext))]
-    partial class CoincideContextModelSnapshot : ModelSnapshot
+    [Migration("20250505014256_Goalv1")]
+    partial class Goalv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,6 @@ namespace Infra.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal>("GoalBalance")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MonthlyExpectedValue")
                         .HasColumnType("decimal(18,2)");
