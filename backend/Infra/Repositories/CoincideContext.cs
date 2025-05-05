@@ -8,6 +8,7 @@ public class CoincideContext : DbContext
     public CoincideContext(DbContextOptions<CoincideContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Goal> Goals { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,6 +49,41 @@ public class CoincideContext : DbContext
             entity.Property(u => u.TotalExpense)
                 .HasColumnType("decimal(18,2)")
                 .HasDefaultValue(0);
+        });
+
+        modelBuilder.Entity<Goal>(entity =>
+        {
+            entity.HasKey(g => g.Id);
+
+            entity.Property(g => g.Title)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(g => g.TargetAmount)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired();
+
+            entity.Property(b => b.GoalBalance)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired();
+
+            entity.Property(g => g.Description)
+                .HasMaxLength(1000);
+
+            entity.Property(g => g.StartDate)
+                .IsRequired();
+
+            entity.Property(g => g.EndDate)
+                .IsRequired();
+
+            entity.Property(g => g.MonthlyExpectedValue)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired();
+
+            entity.HasOne(g => g.User)
+                .WithMany(u => u.Goals)
+                .HasForeignKey(g => g.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }
