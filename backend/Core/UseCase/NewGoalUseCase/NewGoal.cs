@@ -23,7 +23,7 @@ public class NewGoal(
         _goalRepository.Create(goal);
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        output.AddResult(goal.MapToDto());
+        output.AddResult(goal);
         return output;
     }
 }

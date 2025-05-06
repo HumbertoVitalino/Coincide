@@ -28,7 +28,14 @@ public static class GoalMapper
             goal.Description,
             goal.StartDate,
             goal.EndDate,
-            goal.MonthlyExpectedValue
+            goal.MonthlyExpectedValue,
+            goal.User.Email,
+            goal.User.Name
         );
+    }
+
+    public static IEnumerable<GoalDto> MapToDto(this IEnumerable<Goal> goals)
+    {
+        return goals.Select(g => g.MapToDto());
     }
 }

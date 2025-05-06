@@ -1,5 +1,6 @@
 ﻿using Core.Commons;
 using Core.Interfaces;
+using Core.Mappers;
 using Core.UseCase.GetGoalsByUserUseCase.Boundaries;
 using MediatR;
 
@@ -23,7 +24,7 @@ public class GetGoalsByUser(
             return output;
         }
 
-        output.AddResult(goals);
+        output.AddResult(goals.MapToDto());
         return output;
     }
 }

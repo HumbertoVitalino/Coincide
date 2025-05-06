@@ -7,5 +7,7 @@ public sealed record GoalDto(
     string? Description,
     DateTime StartDate,
     DateTime EndDate,
-    decimal MonthlyExpectedValue
+    decimal MonthlyExpectedValue,
+    string UserEmail,
+    string UserName
 );
