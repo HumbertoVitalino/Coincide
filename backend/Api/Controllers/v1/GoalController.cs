@@ -16,7 +16,7 @@ public sealed class GoalController(
 {
     private readonly IMediator _mediator = mediator;
 
-    [HttpGet("Goals")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

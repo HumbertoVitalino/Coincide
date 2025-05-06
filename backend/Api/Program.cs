@@ -10,12 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "TaskFlow API", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Coincide API", Version = "v1" });
 
     var securityScheme = new OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Description = "Insira o token JWT no campo abaixo (sem 'Bearer ')",
+        Description = "put ur jwt below (without 'Bearer ')",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
