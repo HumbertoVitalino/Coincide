@@ -1,5 +1,7 @@
 ﻿using Api.Mapper;
 using Api.Models;
+using Core.Commons;
+using Core.UseCase.GetGoalByIdUseCase.Boundaries;
 using Core.UseCase.GetGoalsByUserUseCase.Boundaries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +18,24 @@ public sealed class GoalController(
 {
     private readonly IMediator _mediator = mediator;
 
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var input = new GetGoalByIdInput(id, UserId);
+        var output = await _mediator.Send(input, cancellationToken);
+
+        if (output.IsValid)
+            return Ok(output);
+
+        return NotFound(output);
+    }
+
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetGoalsAsync(CancellationToken cancellationToken)
     {
@@ -32,8 +49,8 @@ public sealed class GoalController(
     }
 
     [HttpPost("NewGoal")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> NewGoalAsync(
         [FromBody] NewGoalRequest request,
