@@ -4,7 +4,6 @@ using Core.UseCase.NewGoalUseCase;
 using Core.UseCase.NewGoalUseCase.Boundaries;
 using Moq;
 using AutoBogus;
-using Xunit;
 
 namespace UnitTest.UseCaseTests;
 
