@@ -1,4 +1,4 @@
-﻿using Api.Controllers.Models;
+﻿using Api.Models;
 using Core.UseCase.UserLoginUseCase.Boundaries;
 using Core.UseCase.UserRegisterUseCase.Boundaries;
 

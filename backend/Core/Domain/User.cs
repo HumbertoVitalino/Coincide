@@ -10,7 +10,7 @@ public class User : Entity
     public decimal Balance { get; set; } = 0;
     public decimal TotalIncome { get; set; } = 0;
     public decimal TotalExpense { get; set; } = 0;
-
+    public ICollection<Goal> Goals { get; set; } = new List<Goal>();
 
     public User() {}
     public User(string name, DateTime birthday, string email, byte[] passwordHash, byte[] passwordSalt)

@@ -1,5 +1,5 @@
-﻿using Api.Controllers.Models;
-using Api.Mapper;
+﻿using Api.Mapper;
+using Api.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
