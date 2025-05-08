@@ -10,6 +10,13 @@ public class GoalRepository : BaseRepository<Goal>, IGoalRepository
     {
     }
 
+    public async Task<Goal> GetById(Guid goalId)
+    {
+        return await _context.Goals
+            .Include(t => t.User)
+            .FirstOrDefaultAsync(t => t.Id == goalId);
+    }
+
     public async Task<IEnumerable<Goal>> GetByUserId(Guid userId)
     {
         return await _context.Goals
