@@ -1,14 +1,17 @@
 ﻿using Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Infra.Repositories;
 
+[ExcludeFromCodeCoverage]
 public class CoincideContext : DbContext
 {
     public CoincideContext(DbContextOptions<CoincideContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Goal> Goals { get; set; }
+    public DbSet<Income> Incomes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -85,5 +88,33 @@ public class CoincideContext : DbContext
                 .HasForeignKey(g => g.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
+
+        modelBuilder.Entity<Income>(entity =>
+        {
+            entity.HasKey(i => i.Id);
+
+            entity.Property(i => i.Title)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(i => i.Value)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired();
+
+            entity.Property(i => i.Description)
+                .HasMaxLength(1000);
+
+            entity.Property(i => i.Type)
+                .IsRequired();
+
+            entity.Property(i => i.Date)
+                .IsRequired();
+
+            entity.HasOne(i => i.User)
+                .WithMany(u => u.Incomes)
+                .HasForeignKey(i => i.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
     }
 }
