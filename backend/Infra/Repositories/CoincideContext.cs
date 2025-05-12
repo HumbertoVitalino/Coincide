@@ -115,6 +115,5 @@ public class CoincideContext : DbContext
                 .HasForeignKey(i => i.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
-
     }
 }
