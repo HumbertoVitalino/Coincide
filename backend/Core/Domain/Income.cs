@@ -12,12 +12,14 @@ public class Income : Entity
     public Guid UserId { get; set; }
     public User User { get; set; }
 
-    public Income(
+    public Income
+    (
         string title,
         decimal value,
         IncomeType type,
         DateTime date,
-        Guid userId)
+        Guid userId
+    )
     {
         Title = title;
         Value = value;
