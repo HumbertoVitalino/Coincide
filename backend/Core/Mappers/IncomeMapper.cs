@@ -30,4 +30,9 @@ public static class IncomeMapper
             user.TotalIncome
         );
     }
+
+    public static IEnumerable<IncomeDto> MapToDto(this IEnumerable<Income> incomes)
+    {
+        return incomes.Select(i => i.MapToDto(i.User));
+    }
 }
