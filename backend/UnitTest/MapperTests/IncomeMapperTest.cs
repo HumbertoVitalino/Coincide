@@ -45,4 +45,18 @@ public class IncomeMapperTest
         Assert.Equal(income.Date, result.Date);
         Assert.IsType<IncomeDto>(result);
     }
+
+    [Fact(DisplayName = "Map > Success > To DTO List")]
+    public void MapShouldMapToDtoListWithSuccess()
+    {
+        //Arrange
+        var income = new AutoFaker<Income>().Generate(5);
+
+        //Act
+        var result = income.MapToDto();
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.IsAssignableFrom<IEnumerable<IncomeDto>>(result);
+    }
 }
