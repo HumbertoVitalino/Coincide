@@ -1,5 +1,6 @@
 ﻿using AutoBogus;
 using Core.Domain;
+using Core.Dto;
 using Core.Interfaces;
 using Core.UseCase.NewIncomeUseCase;
 using Core.UseCase.NewIncomeUseCase.Boundaries;
@@ -26,15 +27,18 @@ public class NewIncomeUseCaseTest
     {
         // Arrange
         var input = new AutoFaker<NewIncomeInput>().Generate();
+        var user = _userRepositoryMock.Setup(repo => repo.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new AutoFaker<User>().Generate());
 
         // Act
+
         var result = await _useCase.Handle(input, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsValid);
         Assert.NotNull(result.ErrorMessages);
         Assert.NotNull(result.Result);
-        Assert.IsType<Income>(result.Result);
+        Assert.IsType<IncomeDto>(result.Result);
         _incomeRepositoryMock.Verify(repo => repo.Create(It.IsAny<Income>()), Times.Once);
         _unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
