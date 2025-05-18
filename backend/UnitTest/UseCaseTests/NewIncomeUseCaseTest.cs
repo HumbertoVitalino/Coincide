@@ -27,11 +27,13 @@ public class NewIncomeUseCaseTest
     {
         // Arrange
         var input = new AutoFaker<NewIncomeInput>().Generate();
-        var user = _userRepositoryMock.Setup(repo => repo.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AutoFaker<User>().Generate());
+        var user = new AutoFaker<User>().Generate();
+
+        _userRepositoryMock
+            .Setup(repo => repo.Get(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(user);
 
         // Act
-
         var result = await _useCase.Handle(input, CancellationToken.None);
 
         // Assert
