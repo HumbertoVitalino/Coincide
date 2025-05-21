@@ -25,6 +25,7 @@ public static class DependencyInjectionExtension
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
         serviceCollection.AddScoped<IGoalRepository, GoalRepository>();
+        serviceCollection.AddScoped<IIncomeRepository, IncomeRepository>();
 
         return serviceCollection;
     }
