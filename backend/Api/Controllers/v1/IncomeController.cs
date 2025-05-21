@@ -2,6 +2,7 @@
 using Api.Models;
 using Core.Commons;
 using Core.UseCase.GetAllIncomesUseCase.Boundaries;
+using Core.UseCase.GetIncomeByIdUseCase.Boundaries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,28 @@ public sealed class IncomeController(
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var input = new GetAllIncomesInput(UserId);
+
+        var output = await _mediator.Send(input, cancellationToken);
+
+        if (output.IsValid)
+            return Ok(output);
+
+        return BadRequest(output);
+    }
+
+    /// <summary>
+    /// Retrieves a specific income entry by its ID for the authenticated user.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpGet("GetById/{id:guid}")]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Output), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var input = new GetIncomeByIdInput(id, UserId);
 
         var output = await _mediator.Send(input, cancellationToken);
 
