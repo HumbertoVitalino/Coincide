@@ -17,4 +17,11 @@ public class IncomeRepository : BaseRepository<Income>, IIncomeRepository
             .Where(x => x.UserId == UserId)
             .ToListAsync();
     }
+
+    public async Task<Income> GetAsync(Guid id)
+    {
+        return await _context.Incomes
+            .Include(x => x.User)
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
 }
