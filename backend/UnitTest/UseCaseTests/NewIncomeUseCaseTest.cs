@@ -14,6 +14,7 @@ public class NewIncomeUseCaseTest
     private readonly Mock<IUserRepository> _userRepositoryMock;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly NewIncome _useCase;
+
     public NewIncomeUseCaseTest()
     {
         _incomeRepositoryMock = new Mock<IIncomeRepository>();
