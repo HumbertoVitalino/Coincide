@@ -26,6 +26,7 @@ public static class DependencyInjectionExtension
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
         serviceCollection.AddScoped<IGoalRepository, GoalRepository>();
         serviceCollection.AddScoped<IIncomeRepository, IncomeRepository>();
+        serviceCollection.AddScoped<IExpenseRepository, ExpenseRepository>();
 
         return serviceCollection;
     }
