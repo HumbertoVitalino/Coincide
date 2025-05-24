@@ -23,7 +23,7 @@ public sealed class IncomeController(
     /// </summary>  
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>  
     /// <returns>Returns an Output containing the operation result.</returns>
-    [HttpGet("GetAll")]
+    [HttpGet]
     [ProducesResponseType(typeof(Output), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Output), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -45,7 +45,7 @@ public sealed class IncomeController(
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    [HttpGet("GetById/{id:guid}")]
+    [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(Output), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Output), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
