@@ -28,4 +28,9 @@ public static class ExpenseMapper
             expense.Date
         );
     }
+
+    public static IEnumerable<ExpenseDto> MapToDto(this IEnumerable<Expense> expenses)
+    {
+        return expenses.Select(e => e.MapToDto());
+    }
 }
