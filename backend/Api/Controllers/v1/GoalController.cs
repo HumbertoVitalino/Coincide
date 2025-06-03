@@ -48,7 +48,7 @@ public sealed class GoalController(
         return NotFound(output);
     }
 
-    [HttpPost("NewGoal")]
+    [HttpPost]
     [ProducesResponseType(typeof(Output), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Output), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

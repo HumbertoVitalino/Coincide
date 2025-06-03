@@ -12,6 +12,7 @@ public class CoincideContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Goal> Goals { get; set; }
     public DbSet<Income> Incomes { get; set; }
+    public DbSet<Expense> Expenses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -112,6 +113,33 @@ public class CoincideContext : DbContext
 
             entity.HasOne(i => i.User)
                 .WithMany(u => u.Incomes)
+                .HasForeignKey(i => i.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Expense>(entity =>
+        {
+            entity.HasKey(i => i.Id);
+
+            entity.Property(i => i.Title)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(i => i.Value)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired();
+
+            entity.Property(i => i.Description)
+                .HasMaxLength(1000);
+
+            entity.Property(i => i.Type)
+                .IsRequired();
+
+            entity.Property(i => i.Date)
+                .IsRequired();
+
+            entity.HasOne(i => i.User)
+                .WithMany(u => u.Expenses)
                 .HasForeignKey(i => i.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         });

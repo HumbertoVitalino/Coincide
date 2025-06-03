@@ -12,6 +12,7 @@ public class User : Entity
     public decimal TotalExpense { get; set; } = 0;
     public ICollection<Goal> Goals { get; set; } = new List<Goal>();
     public ICollection<Income> Incomes { get; set; } = new List<Income>();
+    public ICollection<Expense> Expenses { get; set; } = new List<Expense>();
 
     public User() {}
     public User(string name, DateTime birthday, string email, byte[] passwordHash, byte[] passwordSalt)
